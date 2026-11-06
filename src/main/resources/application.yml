@@ -11,3 +11,13 @@ spring:
   h2:
     console:
       enabled: true
+  ai:
+    openai:
+      api-key: ${OPENAI_API_KEY}
+      chat:
+        options:
+          model: gpt-5-nano
+      image:
+        options:
+          model: gpt-image-1-mini
+          quality: low

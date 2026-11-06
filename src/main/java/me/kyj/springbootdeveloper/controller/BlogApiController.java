@@ -2,10 +2,10 @@ package me.kyj.springbootdeveloper.controller;
 
 import lombok.RequiredArgsConstructor;
 import me.kyj.springbootdeveloper.domain.Article;
-import me.kyj.springbootdeveloper.dto.AddArticleRequest;
-import me.kyj.springbootdeveloper.dto.ArticleResponse;
-import me.kyj.springbootdeveloper.dto.UpdateArticleRequest;
+import me.kyj.springbootdeveloper.dto.*;
 import me.kyj.springbootdeveloper.service.BlogService;
+import me.kyj.springbootdeveloper.service.ThumbnailFeneratorService;
+import me.kyj.springbootdeveloper.service.WritingAssistantService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +17,8 @@ import java.util.List;
 public class BlogApiController {
 
     private final BlogService blogService;
+    private final WritingAssistantService writingAssistantService;
+    private final ThumbnailFeneratorService thumbnailFeneratorService;
 
     @PostMapping("/api/articles")
     public ResponseEntity<Article> addArticle(
@@ -69,5 +71,27 @@ public class BlogApiController {
         return ResponseEntity.ok()
                 .body(updatedArticle);
     }
+
+    @PostMapping("/api/ai-suggestions")
+    public ResponseEntity<WritingSuggestionsResponse> writingAssist(
+            @RequestBody WritingSuggestionRequest request
+            ) {
+        WritingSuggestionsResponse response = writingAssistantService.getWritingAssist(request);
+
+        return ResponseEntity.ok()
+                .body(response);
+    }
+
+
+    @PostMapping("/api/ai-thumbnails")
+    public ResponseEntity<GeneratorThumbnailResponse> thumbnailGenerator(
+            @RequestBody GeneratorThumbnailRequest request
+    ) {
+        GeneratorThumbnailResponse response = thumbnailFeneratorService.generatorThumbnail(request);
+
+        return ResponseEntity.ok()
+                .body(response);
+    }
+
 
 }
