@@ -21,3 +21,7 @@ spring:
         options:
           model: gpt-image-1-mini
           quality: low
+
+jwt:
+  issuer: ajufresh@gmail.com
+  securet_key: study-springboot
